@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from typing import List
 from datetime import date
 from prophetAI import run_forecast  # our business logic
+import joblib
 
 app = FastAPI(title="AI Backend API", version="1.0")
 
@@ -15,13 +16,15 @@ class ForecastRequest(BaseModel):
     sales: List[SaleRecord]
     months: int = 3  # default forecast horizon
 
+model = joblib.load("models/prophet_model.pkl")
+
 @app.get("/")
 def root():
     return {"status": "ok", "message": "Go to /docs to try the API"}
 
 @app.post("/demand")
 def forecast_post(req: ForecastRequest):
-    return run_forecast(req)
+    return run_forecast(req, model)
 
 # Fayrouz and Mayar add your endpoint details here
 @app.get('/similar-search')
