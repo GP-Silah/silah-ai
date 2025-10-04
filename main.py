@@ -16,7 +16,7 @@ class ForecastRequest(BaseModel):
     sales: List[SaleRecord]
     months: int = 3  # default forecast horizon
 
-model = joblib.load("models/prophet_model.pkl")
+prophet_model = joblib.load("models/prophet_model.pkl")
 
 @app.get("/")
 def root():
@@ -24,9 +24,12 @@ def root():
 
 @app.post("/demand")
 def forecast_post(req: ForecastRequest):
-    return run_forecast(req, model)
+    return run_forecast(req, prophet_model)
 
-# Fayrouz and Mayar add your endpoint details here
-@app.get('/similar-search')
-def similar_search_get():
+@app.post("/similar-search")
+def similar_search_post():
+    return
+
+@app.post("/embed")
+def embed_item_post():
     return
