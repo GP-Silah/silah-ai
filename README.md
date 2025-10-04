@@ -13,6 +13,28 @@ This is a production-ready setup that **uses a pre-trained model**, so there is 
 
 ---
 
+## Libraries Used
+
+- [`fastapi`](https://fastapi.tiangolo.com/) – Web framework for building APIs
+
+- [`uvicorn`](https://www.uvicorn.org/) – ASGI server to run FastAPI
+
+- [`pandas`](https://pandas.pydata.org/) – Data loading and manipulation
+
+- [`numpy`](https://numpy.org/) – Numerical computations
+
+- [`prophet`](https://facebook.github.io/prophet/) – Time series forecasting
+
+- [`joblib`](https://joblib.readthedocs.io/) – Model serialization / deserialization
+
+- [`matplotlib`](https://matplotlib.org/) – Plotting (optional, used by Prophet)
+
+- [`torch`](https://pytorch.org/) – Required for LaBSE embeddings
+
+- [`sentence-transformers`](https://www.sbert.net/) – Pre-trained and fine-tuned LaBSE models
+
+---
+
 ## Setup Instructions
 
 ### 1. Clone the Repository
@@ -63,6 +85,7 @@ uvicorn main:app --reload
 Visit `http://127.0.0.1:8000/docs` for the interactive Swagger UI documentation.
 
 ---
+
 ## API Endpoints
 
 | Endpoint               | Method | Description                                                                           |
