@@ -5,3 +5,5 @@ numpy
 prophet
 joblib
 matplotlib
+torch
+sentence-transformers
