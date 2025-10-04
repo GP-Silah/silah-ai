@@ -65,11 +65,11 @@ Visit `http://127.0.0.1:8000/docs` for the interactive Swagger UI documentation.
 ---
 ## API Endpoints
 
-| Endpoint           | Method | Description                                                              |
-|-------------------|--------|---------------------------------------------------------------------------|
-| `/`               | GET    | Health check / root                                                         |
-| `/demand`         | POST   | Returns a monthly demand forecast for a given product based on sales records |
-| `/similar-search`      | POST   | Returns top-N most similar items for a given query and optional candidates |
+| Endpoint               | Method | Description                                                                           |
+|------------------------|--------|---------------------------------------------------------------------------------------|
+| `/`                    | GET    | Health check / root                                                                   |
+| `/demand`              | POST   | Returns a monthly demand forecast for a given product based on sales records          |
+| `/similar-search`      | POST   | Returns top-N most similar items for a given query and optional candidates            |
 | `/embed`               | POST   | Returns an embedding vector for a given item (`name`, `description`, `category_name`) |
 
 ### `/demand` Endpoint:
