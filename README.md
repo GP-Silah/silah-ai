@@ -1,5 +1,7 @@
 # Silah AI Backend
 
+_Last Updated: October 2025_
+
 This repository contains the backend for the **Silah** project AI features.  
 It currently provides:
 
@@ -27,12 +29,15 @@ python3 -m venv .venv
 source .venv/bin/activate  # Linux/macOS
 # .venv\Scripts\activate   # Windows
 ```
+This ensures all dependencies are installed in an isolated environment.
 
 ### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
+
+This installs all required Python packages for the AI backend.
 
 ### 4. Place the Pre-Trained Model
 
@@ -43,10 +48,11 @@ silah-ai/
 ├─ main.py
 ├─ prophetAI.py
 ├─ models/
-│  └─ prophet_model.pkl   # pre-trained Prophet model
+│  └─ prophet_model.pkl       # Optional trained Prophet model
+│  └─ labse_finetuned.pkl     # optional fine-tuned LaBSE model
 ```
 
-The backend will load this model at startup.
+The backend will load this model at startup. If a fine-tuned model is not available for any feature (Prophet or LaBSE), the backend will automatically fall back to the corresponding pre-trained model to ensure functionality.
 
 ### 5. Run the FastAPI Server
 
@@ -54,15 +60,17 @@ The backend will load this model at startup.
 uvicorn main:app --reload
 ```
 
-Visit `http://127.0.0.1:8000/docs` for the interactive Swagger UI.
+Visit `http://127.0.0.1:8000/docs` for the interactive Swagger UI documentation.
 
 ---
 ## API Endpoints
 
-| Endpoint           | Method | Description                                                      |
-|-------------------|--------|------------------------------------------------------------------|
-| `/`               | GET    | Health check / root                                              |
+| Endpoint           | Method | Description                                                              |
+|-------------------|--------|---------------------------------------------------------------------------|
+| `/`               | GET    | Health check / root                                                         |
 | `/demand`         | POST   | Returns a monthly demand forecast for a given product based on sales records |
+| `/similar-search`      | POST   | Returns top-N most similar items for a given query and optional candidates |
+| `/embed`               | POST   | Returns an embedding vector for a given item (`name`, `description`, `category_name`) |
 
 ### `/demand` Endpoint:
 
@@ -78,7 +86,7 @@ Visit `http://127.0.0.1:8000/docs` for the interactive Swagger UI.
   ]
 }
 ```
-#### Response Body:
+#### Example Response Body:
 
 ```json
 {
@@ -91,13 +99,69 @@ Visit `http://127.0.0.1:8000/docs` for the interactive Swagger UI.
 }
 ```
 
+#### `/similar-search` Endpoint:
+
+#### Example Request Body:
+
+```json
+{
+  "text": "Dog food for puppies",
+  "item_id": null,
+  "embedding": null,
+  "candidates": [
+    {
+      "id": "prod-123",
+      "name": "Premium Puppy Food",
+      "description": "High protein puppy food",
+      "category_name": "Pet Supplies",
+      "embedding": null
+    }
+  ]
+}
+```
+
+#### Example Response Body:
+
+```json
+[
+  {"id": "prod-123", "rank": 1, "score": 0.87}
+]
+```
+
+### `/embed` Endpoint:
+
+#### Example Request Body:
+
+```json
+{
+  "name": "Premium Puppy Food",
+  "description": "High protein puppy food",
+  "category_name": "Pet Supplies"
+}
+```
+
+#### Example Response Body:
+
+```json
+{
+  "embedding": [0.123, 0.432, 0.987, ...]
+}
+```
+
+---
+
 ## Files Overview
 
-| File                       | Description                                                                 |
-|----------------------------|-----------------------------------------------------------------------------|
-| `main.py`                  | FastAPI entry point, defines endpoints and loads the pre-trained model     |
-| `prophetAI.py`             | Business logic for demand forecasting using the pre-trained Prophet model  |
-| `models/prophet_model.pkl` | Pre-trained Prophet model (loaded at startup)                               |
-| `requirements.txt`         | Python dependencies                                                         |
-| `README.md`                | This file                                                                   |
+| File                         | Description                                                                         |
+|------------------------------|-------------------------------------------------------------------------------------|
+| `main.py`                    | FastAPI entry point; defines endpoints and loads the pre-trained models             |
+| `prophetAI.py`               | Business logic for demand forecasting using the pre-trained Prophet model           |
+| `labse_ai.py`                | Business logic for semantic similarity search and embedding generation using LaBSE. |
+| `models/prophet_model.pkl`   | Trained Prophet model (loaded at startup)                                           |
+| `models/labse_finetuned.pkl` | fine-tuned LaBSE model (loaded at startup)                                          |
+| `requirements.txt`           | Python dependencies                                                                 |
+| `README.md`                  | Project documentation                                                               |
 
+---
+
+> Built with care as part of a graduation project requirement, by an amazing team.
