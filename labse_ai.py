@@ -7,7 +7,7 @@ import torch
 from sentence_transformers import SentenceTransformer, util
 
 # Paths / constants
-TRAINED_MODEL_PATH = "models/labse_finetuned.pkl"
+TRAINED_MODEL_PATH = "models/labse_finetuned_cpu"
 PRETRAINED_MODEL_NAME = "sentence-transformers/LaBSE"
 
 # Try to load fine-tuned model (joblib)
