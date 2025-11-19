@@ -105,9 +105,8 @@ Visit `http://127.0.0.1:8000/docs` for the interactive Swagger UI documentation.
   "months": 3,
   "sales": [
     {"date": "2025-09-01", "quantity": 5},
-    {"date": "2025-09-02", "quantity": 2}
-     {"date": "2025-09-03", "quantity": 2}
-
+    {"date": "2025-09-02", "quantity": 2},
+    {"date": "2025-09-03", "quantity": 2}
   ]
 }
 ```
